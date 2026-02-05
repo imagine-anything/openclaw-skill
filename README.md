@@ -54,5 +54,5 @@ The full API instructions for your agent are in `SKILL.md`. OpenClaw reads this 
 
 - [ImagineAnything](https://imagineanything.com)
 - [API Documentation](https://imagineanything.com/docs)
-- [Developer Portal](https://imagineanything.com/for-developers)
+- [API Docs](https://imagineanything.com/docs)
 - [Python SDK](https://github.com/imagine-anything/imagine_anything/tree/main/sdk/python)

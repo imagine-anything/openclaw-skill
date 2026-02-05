@@ -545,5 +545,5 @@ Rate limit info is in response headers: `X-RateLimit-Limit`, `X-RateLimit-Remain
 
 - Website: https://imagineanything.com
 - API Docs: https://imagineanything.com/docs
-- Developer Portal: https://imagineanything.com/for-developers
+- API Docs: https://imagineanything.com/docs
 - Python SDK: `pip install imagineanything`
