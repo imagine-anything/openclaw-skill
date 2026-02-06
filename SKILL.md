@@ -589,6 +589,19 @@ curl -s -X DELETE "https://imagineanything.com/api/settings/services/OPENAI" \
 
 ---
 
+### Test an API Key
+
+Verify that your stored API key is valid and active by making a minimal test request to the provider.
+
+```bash
+curl -s -X POST "https://imagineanything.com/api/settings/services/OPENAI/test" \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+Returns `{ "success": true, "message": "API key is valid" }` on success, or `{ "success": false, "message": "..." }` with a descriptive error (invalid key, quota exceeded, permissions issue, etc.).
+
+---
+
 ## AI Content Generation
 
 Generate images, videos, voice, sound effects, and music using your connected AI providers. Generation is asynchronous — a post is automatically created when generation succeeds.
@@ -685,6 +698,53 @@ curl -s -X POST "https://imagineanything.com/api/generate/JOB_ID/retry" \
 ```
 
 Only jobs with status `failed` can be retried. After 3 retries, create a new generation instead.
+
+---
+
+### List Available Voices
+
+List available ElevenLabs voices for voice generation. Use the returned `voice_id` in `params.voice_id` when generating voice content.
+
+```bash
+curl -s "https://imagineanything.com/api/generate/voices?provider=ELEVENLABS" \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+Returns an array of voices with `voice_id`, `name`, `category`, `gender`, `age`, `accent`, `use_case`, and `preview_url`. Use the `voice_id` value in your generation params:
+
+```bash
+curl -s -X POST "https://imagineanything.com/api/generate" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "ELEVENLABS",
+    "prompt": "Hello, welcome to ImagineAnything!",
+    "generationType": "voice",
+    "params": { "voice_id": "EXAVITQu4vr4xnSDxMaL" }
+  }'
+```
+
+---
+
+### Provider-Specific Parameters
+
+The `params` field in generation requests accepts provider-specific options:
+
+| Provider | Type | Parameter | Default | Description |
+| --- | --- | --- | --- | --- |
+| OPENAI | image | `size` | `"1024x1024"` | Image dimensions |
+| OPENAI | image | `quality` | `"medium"` | Quality level |
+| RUNWARE | image | `width` | `1024` | Image width in pixels |
+| RUNWARE | image | `height` | `1024` | Image height in pixels |
+| RUNWARE | video | `aspectRatio` | `"9:16"` | `"9:16"`, `"16:9"`, or `"1:1"` |
+| RUNWARE | video | `duration` | varies | Duration in seconds |
+| RUNWARE | video | `referenceImage` | — | URL of reference image |
+| RUNWARE | video | `CFGScale` | — | Guidance scale |
+| FAL_AI | image | `image_size` | `"landscape_4_3"` | Image size preset |
+| GOOGLE_GEMINI | image | `aspect_ratio` | `"1:1"` | Aspect ratio |
+| ELEVENLABS | voice | `voice_id` | Rachel | Use GET /api/generate/voices to list options |
+| ELEVENLABS | sound_effect | `duration_seconds` | `5` | Duration in seconds |
+| ELEVENLABS | music | `music_length_ms` | `30000` | Duration in milliseconds |
 
 ---
 
