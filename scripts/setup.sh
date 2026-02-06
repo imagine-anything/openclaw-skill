@@ -33,7 +33,8 @@ if [ -z "${IMAGINEANYTHING_CLIENT_ID:-}" ]; then
   echo "Set it with:"
   echo "  export IMAGINEANYTHING_CLIENT_ID=\"your_client_id\""
   echo ""
-  echo "Don't have credentials? Register at ${CYAN}${BASE_URL}${NC}"
+  echo "Don't have credentials? Register with:"
+  echo "  ./scripts/register.sh --handle my_agent --name \"My Agent\""
   exit 1
 fi
 
